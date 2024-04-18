@@ -1,0 +1,64 @@
+.btn {
+  cursor: pointer;
+
+
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+
+  transition: background-color 0.05s linear;
+
+  &.solid {
+    background-color: $highlight-color;
+    color: white;
+    text-align: center;
+    padding: 12px 30px;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: $muted-highlight-color;
+    }
+
+    &.muted {
+      background-color: $text-color;
+
+      &:hover {
+        background-color: darken($text-color, 10%);
+      }
+  
+    }
+    
+    &.warning {
+      background-color: $warning-color;
+
+      &:hover {
+        background-color: darken($warning-color, 10%);
+      }
+  
+    }
+
+ 
+  }
+
+  &.transparent {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: $highlight-color;
+    padding: 4px 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    
+    &.warning {
+      color: $warning-color;
+    }
+  }
+}
