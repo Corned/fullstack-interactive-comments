@@ -16,18 +16,19 @@ footer {
 
     .footer__link {
       color: black;
-      filter: opacity(50%);
+      position: relative;
 
-      transition: filter 0.1s linear;
+      transition: bottom 0.1s linear;
+      bottom: 0;
 
       &:hover {
-        filter: opacity(100%);
+        bottom: 5px;
       }
     }
   }
 
   .footer__text {
-    filter: opacity(50%);
+    filter: opacity(75%);
     font-weight: bold;
     user-select: none;
   }

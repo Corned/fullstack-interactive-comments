@@ -22,7 +22,7 @@ const Footer = () => {
           <WebsiteIcon/>
         </a>
       </div>
-      <p className="footer__text">made with 🩸, 💦 and 💧💧💧</p>
+      <p className="footer__text">made with 💻, ⚛️, 🩸, 💦 & 😭</p>
     </footer>
   )
 }
