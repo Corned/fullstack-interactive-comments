@@ -7,10 +7,14 @@ import data from "data.json"
 import Comment from "components/Comment"
 import CommentForm from "components/CommentForm"
 import Modal from "components/Modal"
+import Header from "components/Header"
+import Footer from "components/Footer"
 
 function App() {
   return (
-    <div className="App list">
+    <div className="App">
+
+      <Header/>
 
 {/*       <Modal>
         <h1>Delete comment</h1>
@@ -21,19 +25,24 @@ function App() {
         </div>
       </Modal> */}
 
-      {
-        data.comments.map((comment) => 
-          <Comment
-            commentData={comment}
-            currentUser={data.currentUser}
-          />
-        )
-      }
+      <main>
+        {
+          data.comments.map((comment) => 
+            <Comment
+              commentData={comment}
+              currentUser={data.currentUser}
+            />
+          )
+        }
 
-      <CommentForm
-        buttonLabel="send"
-        currentUser={data.currentUser}
-      />
+        <CommentForm
+          buttonLabel="send"
+          currentUser={data.currentUser}
+        />
+      </main>
+
+
+      <Footer/>
     </div>
   )
 }

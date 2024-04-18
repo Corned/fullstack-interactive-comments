@@ -11,6 +11,9 @@
 
 // Layout
 @import "layout/list";
+@import "layout/header";
+@import "layout/footer";
+@import "layout/main";
 
 // Components
 @import "components/buttons";
@@ -19,3 +22,4 @@
 @import "components/modals";
 @import "components/comment";
 @import "components/profile-picture";
+@import "components/logo";
