@@ -47,7 +47,7 @@ textarea {
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
 
   & > div {
     
@@ -85,7 +85,6 @@ textarea {
       background: #ff7e5f;  /* fallback for old browsers */
       background: -webkit-linear-gradient(to right, #feb47b, #ff7e5f);  /* Chrome 10-25, Safari 5.1-6 */
       background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      margin-top: 10px;
     }
   }
 
@@ -119,6 +118,41 @@ textarea {
       &:not(:first-child) {
         color: $text-color;
       }
+    }
+  }
+  
+  .login-form__or-with {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+
+    div {
+      height: 4px;
+      background-color: $background-color;
+    }
+  }
+
+  .login-form__oauth {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    
+    button {
+      border: none;
+      background-color: $background-color;
+      padding: 6px 10px;
+      border-radius: 8px;
+      gap: 5px;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      cursor: not-allowed;
     }
   }
 
