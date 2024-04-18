@@ -2,6 +2,7 @@
   z-index: 10;
 
   .modal__container {
+    z-index: 2;
     padding: 40px;
 
     // temporary just for this single .modal
@@ -9,15 +10,15 @@
     flex-direction: column;
     gap: 20px;
     
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
 
     max-width: 420px;
     line-height: 22px;
     color: $text-color;
 
-    transform: translate(-50%, -50%);
 
     h1 {
       color: $bold-text-color;
@@ -31,8 +32,8 @@
   }
 
   .modal__background {
-    z-index: -1;
-    position: absolute;
+    z-index: 1;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;

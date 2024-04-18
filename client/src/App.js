@@ -9,6 +9,7 @@ import CommentForm from "components/CommentForm"
 import Modal from "components/Modal"
 import Header from "components/Header"
 import Footer from "components/Footer"
+import LoginForm from "components/LoginForm"
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <button className="btn solid warning">YES, DELETE</button>
         </div>
       </Modal> */}
+
+      <LoginForm/>
 
       <main>
         {
