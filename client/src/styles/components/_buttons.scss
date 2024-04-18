@@ -8,6 +8,7 @@
   border: none;
 
   transition: background-color 0.05s linear;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   &.solid {
     background-color: $highlight-color;
