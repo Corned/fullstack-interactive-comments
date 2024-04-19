@@ -41,3 +41,5 @@ router.post("/", async (req, res) => {
     return response.status(500).json({ error: "Something went wrong..." })
   }
 })
+
+export default router

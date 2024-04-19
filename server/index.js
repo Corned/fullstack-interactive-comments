@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser"
 import commentRouter from "./routers/Comment.js"
 import userRouter from "./routers/User.js"
 import voteRouter from "./routers/Vote.js"
+import loginRouter from "./routers/Login.js"
 
 dotenv.config()
 
@@ -28,8 +29,13 @@ app.use(morgan("tiny"))
 app.use("/user", userRouter)
 app.use("/comment", commentRouter)
 app.use("/vote", voteRouter)
+app.use("/auth/login", loginRouter)
 
 app.get("/", (req, res) => {
+  res.send("Hello world!")
+})
+
+app.get("/test", (req, res) => {
   res.send("Hello world!")
 })
 
