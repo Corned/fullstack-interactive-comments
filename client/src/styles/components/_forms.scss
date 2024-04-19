@@ -44,18 +44,20 @@ textarea {
   height: 100%;
 }
 
+
+
 .login-and-registration {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
+  min-width: 400px;
 
-  & > div {
+  .header {
     
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
     
   }
 

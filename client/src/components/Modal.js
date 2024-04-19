@@ -1,7 +1,7 @@
 const Modal = ({ className, children }) => {
   return (
-    <div className={`modal ${className}`}>
-      <div className="modal__container card">
+    <div className="modal">
+      <div className={`modal__container card ${className}`}>
         { children }
       </div>
 
