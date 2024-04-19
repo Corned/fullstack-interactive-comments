@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 const { Schema } = mongoose
 
-const voteSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -26,6 +26,6 @@ const voteSchema = new Schema({
   }],
 })
 
-const Vote = mongoose.model("Vote", voteSchema)
+const User = mongoose.model("User", UserSchema)
 
-export default Vote
+export default User
