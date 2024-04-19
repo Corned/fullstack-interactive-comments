@@ -10,11 +10,9 @@ const voteSchema = new Schema({
     minlength: 3,
   },
 
-  password: {
+  passwordHash: {
     type: String,
     required: true,
-    maxlength: 64,
-    minlength: 8,
   },
 
   comments: [{
