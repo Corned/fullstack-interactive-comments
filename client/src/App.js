@@ -9,7 +9,8 @@ import CommentForm from "components/CommentForm"
 import Modal from "components/Modal"
 import Header from "components/Header"
 import Footer from "components/Footer"
-import LoginForm from "components/LoginForm"
+
+import LoginAndRegistration from "components/LoginAndRegistration"
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         </div>
       </Modal> */}
 
-      <LoginForm/>
+      <LoginAndRegistration/>
 
       <main>
         {

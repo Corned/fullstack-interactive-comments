@@ -1,6 +1,6 @@
-const Modal = ({ children }) => {
+const Modal = ({ className, children }) => {
   return (
-    <div className="modal">
+    <div className={`modal ${className}`}>
       <div className="modal__container card">
         { children }
       </div>

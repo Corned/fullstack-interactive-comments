@@ -1,11 +1,6 @@
 import { useForm } from "react-hook-form"
 
-import { RiTwitterXLine } from "@remixicon/react"
-import { RiGithubLine } from "@remixicon/react"
-import { RiAppleLine } from "@remixicon/react"
-import { RiGoogleFill } from "@remixicon/react"
-import { RiDiscordFill } from "@remixicon/react"
-import { RiTaobaoFill } from "@remixicon/react"
+
 
 import Modal from "./Modal"
 import Logo from "./Logo"
@@ -70,40 +65,6 @@ const LoginForm = () => {
 
         </div>
 
-        <div className="login-form__or-with">
-          <div></div>
-          <p>or log in with</p>
-          <div></div>
-        </div>
-
-        <div className="login-form__alternative">
-          <div className="login-form__oauth">
-            <button>
-              <RiTwitterXLine/>
-              <span>Twitter</span>
-            </button>
-            <button>
-              <RiGithubLine/>
-              <span>GitHub</span>
-            </button>
-            <button>
-              <RiAppleLine/>
-              <span>Apple</span>
-            </button>
-            <button>
-              <RiGoogleFill/>
-              <span>Google</span>
-            </button>
-            <button>
-              <RiDiscordFill/>
-              <span>Discord</span>
-            </button>
-            <button>
-              <RiTaobaoFill/>
-              <span>Taobao</span>
-            </button>
-          </div>
-        </div>
 
 
       </div>
