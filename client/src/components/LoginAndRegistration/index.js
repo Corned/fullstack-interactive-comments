@@ -5,6 +5,8 @@ import Logo from "components/Logo"
 import OAuthButtons from "./OAuthButtons"
 import Modal from "components/Modal"
 import StateSelector from "components/StateSelector"
+import LoginForm from "./LogIn"
+import SignUpForm from "./SignUp"
 
 
 const LoginAndRegistration = () => {
@@ -17,9 +19,13 @@ const LoginAndRegistration = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = () => {
+  const onSubmitSignUp = handleSubmit((data, event) => {
+    console.log(`Registering as "${ JSON.stringify(data) }"`);
+  })
 
-  }
+  const onSubmitSignIn = handleSubmit((data, event) => {
+    console.log(`Signing in as "${ JSON.stringify(data) }"`);
+  })
 
   return (
     <Modal className="login-and-registration">
@@ -38,28 +44,7 @@ const LoginAndRegistration = () => {
       {
         state === "sign in" &&
         <>
-          <form onSubmit={onSubmit}>
-            <div>
-              <label for="name">Username</label>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                {...register("username")}
-              />
-            </div>  
-            <div>
-              <label for="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                {...register("password")}
-              />
-            </div>  
-
-            <button className="btn solid">Log in!</button>
-          </form>
+          <LoginForm register={register} onSubmit={onSubmitSignIn}/>
 
           <div className="login-and-registration__or-with">
             <div></div>
@@ -73,38 +58,7 @@ const LoginAndRegistration = () => {
 
       {
         state === "sign up" &&
-        <form onSubmit={onSubmit}>
-          <div>
-            <label for="name">Thy username sire:</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              {...register("username")}
-            />
-          </div>  
-          <div>
-            <label for="password">Choose a strong password!</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              {...register("password")}
-            />
-          </div>  
-          <div>
-            <label for="password-confirm">Now, repeat it!</label>
-            <input
-              type="password"
-              name="password-confirm"
-              placeholder="Password"
-              {...register("password-confirm")}
-            />
-          </div>
-
-          <button className="btn solid">Sign up!</button>
-        </form>
-
+        <SignUpForm register={register} onSubmit={onSubmitSignUp}/>
       }
 
 
