@@ -44,8 +44,6 @@ textarea {
   height: 100%;
 }
 
-
-
 .login-and-registration {
   display: flex;
   flex-direction: column;
@@ -53,12 +51,10 @@ textarea {
   min-width: 400px;
 
   .header {
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
   }
 
   form {
@@ -67,7 +63,6 @@ textarea {
     gap: 15px;
     width: 100%;
 
-    
     label {
       display: block;
       color: $bold-text-color;
@@ -89,18 +84,7 @@ textarea {
       background: linear-gradient(to right, #feb47b, #ff7e5f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
   }
-
-  
-  
 }
-
-
-
-
-
-
-
-
 
 
 .login-and-registration__or-with {
