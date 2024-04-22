@@ -24,6 +24,8 @@ const userSchema = new Schema({
     type: Schema.ObjectId,
     ref: "Vote",
   }],
+}, {
+  timestamps: true
 })
 
 const User = mongoose.model("User", userSchema)

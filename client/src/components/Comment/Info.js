@@ -1,4 +1,5 @@
 import ProfilePicture from "components/ProfilePicture"
+import Moment from "react-moment"
 
 const Info = ({ currentUser, user, createdAt }) => {
 
@@ -19,7 +20,9 @@ const Info = ({ currentUser, user, createdAt }) => {
         </div>
       }
 
-      <p className="comment__info-date">{ createdAt }</p>
+      <p className="comment__info-date">
+        <Moment fromNow ago>{ createdAt }</Moment> ago
+      </p>
     </div>
   )
 }

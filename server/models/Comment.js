@@ -28,6 +28,8 @@ const commentSchema = new Schema({
     type: Schema.ObjectId,
     ref: "Comment",
   }
+}, {
+  timestamps: true
 })
 
 const Comment = mongoose.model("Comment", commentSchema)

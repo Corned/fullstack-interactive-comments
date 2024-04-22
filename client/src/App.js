@@ -46,7 +46,9 @@ function App() {
 
       <main>
         {
-          comments.map((comment) => 
+          comments.map((comment) =>
+            // Only render comments without parents
+            comment.parent ? <></> :
             <Comment
               commentData={comment}
               currentUser={data.currentUser}

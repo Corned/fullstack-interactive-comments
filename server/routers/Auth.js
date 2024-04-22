@@ -14,6 +14,11 @@ router.post("/", async (req, res) => {
   }
 
   const user = await User.findById(userId)
+  if (!user) {
+    return req.status(500).json({ 
+      error: "You're authenticated, but user doesn't exist"
+    })
+  }
   const userObject = user.toObject()
   delete userObject.passwordHash
 
@@ -21,6 +26,7 @@ router.post("/", async (req, res) => {
 })
 
 router.post("/logout", async (req, res) => {
+  // or res.clearCookie percharce
   res.cookie("auth", "", {
     httpOnly: true,
     // secure: true,
