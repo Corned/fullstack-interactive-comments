@@ -29,6 +29,7 @@ const LoginForm = () => {
     }
 
     // Logged in successfully. :D
+    console.log(data);
   })
 
   return (
