@@ -7,26 +7,22 @@ import { UserContext } from "context/UserContext"
 
 import Comment from "components/Comment"
 
+import AuthService from "services/AuthService"
+
 function App() {
   const [ user, setUser ] = useContext(UserContext)
 
   // Check for login
   useEffect(() => {
-    const authenticate = async () => {
-      const response = await fetch("/auth", {
-        method: "POST",
-        credentials: "same-origin",
-      })
-
-      const data = await response.json()
-      if (data.error) {
-        return
+    const auth = async () => {
+      try {
+        await AuthService.authenticate(setUser)
+      } catch (err) {
+        console.log(err.message)
       }
-
-      setUser(data.user)
     }
 
-    authenticate()
+    auth()
   }, [ ])
 
 

@@ -5,15 +5,18 @@ import { RiUser3Line as LoginIcon } from "@remixicon/react"
 
 import Logo from "./Logo"
 import LoginAndRegistration from "./LoginAndRegistration"
+import AuthService from "services/AuthService"
 
 const Header = () => {
   const [ user, setUser ] = useContext(UserContext)
   const [ displayModal, setDisplayModal ] = useState(false)
 
-  const logout = () => {
-    fetch("/auth/logout", {
-      method: "POST"
-    })
+  const logout = async () => {
+    try {
+      await AuthService.logout(setUser)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   return (

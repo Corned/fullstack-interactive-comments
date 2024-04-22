@@ -1,6 +1,7 @@
 import { UserContext } from "context/UserContext"
 import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
+import AuthService from "services/AuthService"
 
 const LoginForm = () => {
   const [ user, setUser ] = useContext(UserContext)
@@ -13,27 +14,12 @@ const LoginForm = () => {
   } = useForm()
 
   const onSubmit = handleSubmit(async (formData, event) => {
-    delete formData["password-confirm"]
-    console.log(`Signing in as "${ JSON.stringify(formData) }"`);
-    
-    const response = await fetch("/auth/login", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-
-    const data = await response.json()
-    if (data.error) {
-      return setError(data.error)
+    try {
+      await AuthService.login(setUser, formData.username, formData.password)
+    } catch (error) {
+      console.log(error.message)
+      setError(error.message)
     }
-
-    // Logged in successfully. :D
-    console.log(`Login request returned data: ${JSON.stringify(data)}`);
-    setUser(data.user)
   })
 
   return (
