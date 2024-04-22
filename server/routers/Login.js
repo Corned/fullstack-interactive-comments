@@ -36,8 +36,16 @@ router.post("/", async (req, res) => {
       id: user._id
     }, process.env.SECRET_KEY)
 
-    delete user.passwordHash
-    return res.status(200).json({ user, token })
+    res.cookie("auth", `Bearer ${token}`, {
+      httpOnly: true,
+      // secure: true,
+      maxAge: 2**32,
+    })
+
+    const userObject = user.toObject()
+    delete userObject.passwordHash
+    
+    return res.status(200).json({ user: userObject })
 
   } catch(exception) {
     console.log(exception)

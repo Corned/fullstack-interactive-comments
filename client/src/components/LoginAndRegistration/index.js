@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useForm } from "react-hook-form"
 
 import Logo from "components/Logo"
 import OAuthButtons from "./OAuthButtons"
@@ -7,15 +6,21 @@ import Modal from "components/Modal"
 import StateSelector from "components/StateSelector"
 import LoginForm from "./LogIn"
 import SignUpForm from "./SignUp"
+import { useContext } from "react"
+import { UserContext } from "context/UserContext"
 
 
-const LoginAndRegistration = () => {
+const LoginAndRegistration = ({ hide }) => {
+  const [ user ] = useContext(UserContext)
   const [ state, setState ] = useState("sign in")
 
-
+  if (user) {
+    hide()
+    return
+  }
 
   return (
-    <Modal className="login-and-registration">
+    <Modal className="login-and-registration" hide={hide}>
 
       <div className="header">
         <Logo/>

@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { UserContext } from "context/UserContext"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
 const LoginForm = () => {
+  const [ user, setUser ] = useContext(UserContext)
+
   const [ error, setError ] = useState(null)
   const {
     register,
@@ -29,7 +32,8 @@ const LoginForm = () => {
     }
 
     // Logged in successfully. :D
-    console.log(data);
+    console.log(`Login request returned data: ${JSON.stringify(data)}`);
+    setUser(data.user)
   })
 
   return (

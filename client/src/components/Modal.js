@@ -1,11 +1,11 @@
-const Modal = ({ className, children }) => {
+const Modal = ({ className, children, hide }) => {
   return (
     <div className="modal">
       <div className={`modal__container card ${className}`}>
         { children }
       </div>
 
-      <div className="modal__background"/>
+      <div className="modal__background" onClick={hide}/>
     </div>
   )
 }
