@@ -1,30 +1,50 @@
-import Logo from "./Logo"
+import { useState } from "react"
+import { useContext, useEffect } from "react"
+import { UserContext } from "context/UserContext"
 import { RiUser3Line as LoginIcon } from "@remixicon/react"
 
-
+import Logo from "./Logo"
 import LoginAndRegistration from "./LoginAndRegistration"
-import { useState } from "react"
 
 const Header = () => {
+  const [ user, setUser ] = useContext(UserContext)
   const [ displayModal, setDisplayModal ] = useState(false)
 
+  const logout = () => {
+    fetch("/auth/logout", {
+      method: "POST"
+    })
+  }
+
   return (
-    <>
     <header>
       <Logo/>
-      <button className="btn transparent" onClick={() => setDisplayModal(true)}>
-        <LoginIcon/>
-        <span>login</span>
-      </button>
 
-    { displayModal && (
-      <LoginAndRegistration
-        hide={() => setDisplayModal(false)}
-      />
-    )}
+      {
+        user && (
+          <div>
+            <p>Logged in as { user.username }</p>
+            <button className="btn transparent" onClick={logout}>logout :(</button> 
+          </div>
+          
+        )
+      }
+
+      {
+        !user && (
+          <button className="btn transparent" onClick={() => setDisplayModal(true)}>
+            <LoginIcon/>
+            <span>login</span>
+          </button>
+        )
+      }
+
+      { displayModal && (
+        <LoginAndRegistration
+          hide={() => setDisplayModal(false)}
+        />
+      )}
     </header>
-    
-    </>
   )
 }
 

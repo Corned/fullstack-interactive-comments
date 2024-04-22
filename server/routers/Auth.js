@@ -20,6 +20,16 @@ router.post("/", async (req, res) => {
   res.status(200).json({ user: decoded })
 })
 
+router.post("/logout", async (req, res) => {
+  res.cookie("auth", "", {
+    httpOnly: true,
+    // secure: true,
+    maxAge: 0,
+  })
+
+  res.status(200).send()
+})
+
 router.post("/login", async (req, res) => {
   const { username, password } = req.body
 
