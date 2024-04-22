@@ -13,7 +13,9 @@ router.post("/", async (req, res) => {
   console.log("login attempt", { username, password });
 
   try {
-    const user = await User.findOne({ username })
+    const user = await User
+      .findOne({ username })
+      .select("username passwordHash")
 
     if (!user) {
       return res.status(401).json({
@@ -21,7 +23,7 @@ router.post("/", async (req, res) => {
       })
     }
 
-    const isPasswordCorrect = await bcrypt.compare(password, user.password)
+    const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash)
     if (!isPasswordCorrect) {
       return res.status(401).json({
         error: "Invalid username or password"
@@ -34,13 +36,12 @@ router.post("/", async (req, res) => {
       id: user._id
     }, process.env.SECRET_KEY)
 
-    res.cookie("access_token", `Bearer ${token}`)
-
-    return response.status(200).json({ user })
+    delete user.passwordHash
+    return res.status(200).json({ user, token })
 
   } catch(exception) {
     console.log(exception)
-    return response.status(500).json({ error: "Something went wrong..." })
+    return res.status(500).json({ error: "Something went wrong..." })
   }
 })
 
