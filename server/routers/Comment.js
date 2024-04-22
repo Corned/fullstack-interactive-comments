@@ -9,6 +9,7 @@ router.get("/", async (req, res) => {
   const comments = await Comment
     .find({})
     .populate("owner", [ "username" ])
+    .populate("replies")
 
   res.status(200).json(comments)
 })
@@ -19,30 +20,26 @@ router.get("/:id", async (req, res) => {
     .findById(id)
     .populate("owner", [ "username" ])
 
-
   res.status(200).json(comment)
 })
 
 router.post("/", async (req, res) => {
   const { content, parentId } = req.body
 
-  console.log(req.body);
-
   if (!req.userId) {
     return res.status(401).json({ error: "User is not authenticated" })
   }
 
-  console.log(content);
-
   const user = await User.findById(req.userId)
-  const newComment = new Comment({ content, owner: user })
+  const newComment = new Comment({ content, owner: user, parent: parentId })
 
   await newComment.save()
   user.comments.push(newComment._id)
   await user.save()
 
   if (parentId) {
-    parentComment.replies.push(parentId)
+    const parentComment = await Comment.findById(parentId)
+    parentComment.replies.push(newComment._id)
     await parentComment.save()
   }
 
@@ -50,7 +47,20 @@ router.post("/", async (req, res) => {
 })
 
 router.put("/:id", async (req, res) => {
-  res.send("Hello world!")
+  const { id, content } = req.body
+
+  const comment = await Comment.findById(id)
+
+  if (comment.id !== req.userId) {
+    return res.status(401).json({
+      error: "You're not the owner of the comment"
+    })
+  }
+
+  comment.content = content
+  await comment.save()
+
+  res.status(200).json(comment.toObject())
 })
 
 router.delete("/:id", async (req, res) => {

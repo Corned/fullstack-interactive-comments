@@ -67,7 +67,11 @@ const Comment = ({ commentData }) => {
 
       {
         isReplying &&
-        <CommentForm buttonLabel="reply" currentUser={user}/>
+        <CommentForm
+          buttonLabel="reply"
+          currentUser={user}
+          parentId={commentData._id}
+        />
       }
 
       {

@@ -2,9 +2,6 @@ import ProfilePicture from "components/ProfilePicture"
 import Moment from "react-moment"
 
 const Info = ({ currentUser, user, createdAt }) => {
-
-  console.log(user);
-
   return (
     <div className="comment__info">
       <ProfilePicture 
