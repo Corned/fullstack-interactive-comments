@@ -4,20 +4,20 @@ import bcrypt from "bcryptjs"
 
 import User from "../models/User.js"
 
-
 const router = express.Router()
 
 router.post("/", async (req, res) => {
-  const { auth } = req.cookies
+  const userId = req.userId
 
-  if (!auth) {
+  if (!userId) {
     return res.status(401).json({ error: "User is not authenticated" })
   }
 
-  const [ _, token ] = auth.split(" ")
-  const decoded = jwt.verify(token, process.env.SECRET_KEY)
+  const user = await User.findById(userId)
+  const userObject = user.toObject()
+  delete userObject.passwordHash
 
-  res.status(200).json({ user: decoded })
+  res.status(200).json({ user: userObject })
 })
 
 router.post("/logout", async (req, res) => {
@@ -32,8 +32,6 @@ router.post("/logout", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body
-
-  console.log("login attempt", { username, password });
 
   try {
     const user = await User

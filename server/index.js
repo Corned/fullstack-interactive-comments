@@ -9,6 +9,7 @@ import commentRouter from "./routers/Comment.js"
 import userRouter from "./routers/User.js"
 import voteRouter from "./routers/Vote.js"
 import authRouter from "./routers/Auth.js"
+import isAuthenticated from "./middleware/auth.js"
 
 dotenv.config()
 
@@ -27,10 +28,11 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan("tiny"))
+app.use(isAuthenticated)
+app.use("/auth", authRouter)
 app.use("/user", userRouter)
 app.use("/comment", commentRouter)
 app.use("/vote", voteRouter)
-app.use("/auth", authRouter)
 
 app.get("/", (req, res) => {
   res.send("Hello world!")
