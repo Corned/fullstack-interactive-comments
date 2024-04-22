@@ -1,7 +1,7 @@
 const ProfilePicture = ({ className, src }) => {
   return <img
     className={`profile-picture ${className}`}
-    src={"../." + src}
+    //src={"../." + src}
     alt="Profile"
   />
 }

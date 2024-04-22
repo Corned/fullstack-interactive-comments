@@ -12,7 +12,6 @@ const commentSchema = new Schema({
   votes: [{
     type: Schema.ObjectId,
     ref: "Vote",
-    unique: true,
   }],
 
   owner: {
@@ -23,7 +22,12 @@ const commentSchema = new Schema({
   replies: [{
     type: Schema.ObjectId,
     ref: "Comment",
-  }]
+  }],
+
+  parent: {
+    type: Schema.ObjectId,
+    ref: "Comment",
+  }
 })
 
 const Comment = mongoose.model("Comment", commentSchema)

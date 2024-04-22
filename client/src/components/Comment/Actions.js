@@ -13,7 +13,11 @@ const Actions = (props) => {
   return (
     <div className="comment__actions">
       {
-        currentUser.username === user.username &&
+        !currentUser &&
+        <></>
+      }
+      {
+        currentUser && currentUser?.username === user.username &&
         <>
           <button className="btn transparent warning">
             <RiDeleteBinLine/>
@@ -26,7 +30,7 @@ const Actions = (props) => {
         </>
       }
       {
-        currentUser.username !== user.username &&
+        currentUser && currentUser?.username !== user.username &&
         <button className="btn transparent" onClick={toggleReply}>
           { isReplying ? <RiEmotionSadLine/> : <RiReplyFill/> }
           <span>{ isReplying ? "Nevermind.." : "Reply" }</span>

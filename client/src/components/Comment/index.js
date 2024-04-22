@@ -5,10 +5,14 @@ import Info from "components/Comment/Info"
 import Content from "components/Comment/Content"
 import EditForm from "components/Comment/EditForm"
 
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "context/UserContext"
+
 import CommentForm from "components/CommentForm"
 
-const Comment = ({ currentUser, commentData }) => {
+const Comment = ({ commentData }) => {
+  const [ user ] = useContext(UserContext)
+
   const [ isEditing, setIsEditing ] = useState(false)
   const [ isReplying, setIsReplying ] = useState(false)
 
@@ -21,29 +25,30 @@ const Comment = ({ currentUser, commentData }) => {
   }
 
   const {
-    score,
+    votes,
     content,
     createdAt,
-    user,
+    owner,
     replies,
+    parent,
   } = commentData
 
   return (
     <div className="comment-wrapper">
       <div className="card comment">
         <Vote
-          score={score}
+          score={votes.length}
         />
 
         <Info
-          currentUser={currentUser}
-          user={user}
+          currentUser={user}
+          user={owner}
           createdAt={createdAt}
         />
 
         <Actions
-          currentUser={currentUser}
-          user={user}
+          currentUser={user}
+          user={owner}
 
           isReplying={isReplying}
           toggleReply={handleReplyButton}
@@ -54,22 +59,15 @@ const Comment = ({ currentUser, commentData }) => {
 
         {
           isEditing
-          ? (
-            <EditForm
-              content={content}
-            />
-          ) : (
-            <Content
-              content={content}
-            />
-          )
+          ? <EditForm content={content} /> 
+          : <Content content={content} />
         }
       </div>
 
 
       {
         isReplying &&
-        <CommentForm buttonLabel="reply" currentUser={currentUser}/>
+        <CommentForm buttonLabel="reply" currentUser={user}/>
       }
 
       {
@@ -81,7 +79,7 @@ const Comment = ({ currentUser, commentData }) => {
               replies.map((comment) => 
                 <Comment
                   commentData={comment}
-                  currentUser={currentUser}
+                  currentUser={user}
                 />
               )
             }
