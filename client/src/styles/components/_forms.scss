@@ -4,6 +4,7 @@
   grid-template-rows: auto;
   gap: 20px;
   align-items: flex-start;
+  width: 100%;
 
   @include respond(medium) {
     grid-template-columns: 1fr 1fr;
