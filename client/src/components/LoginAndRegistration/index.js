@@ -12,20 +12,7 @@ import SignUpForm from "./SignUp"
 const LoginAndRegistration = () => {
   const [ state, setState ] = useState("sign in")
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm()
 
-  const onSubmitSignUp = handleSubmit((data, event) => {
-    console.log(`Registering as "${ JSON.stringify(data) }"`);
-  })
-
-  const onSubmitSignIn = handleSubmit((data, event) => {
-    console.log(`Signing in as "${ JSON.stringify(data) }"`);
-  })
 
   return (
     <Modal className="login-and-registration">
@@ -42,23 +29,25 @@ const LoginAndRegistration = () => {
       />
 
       {
-        state === "sign in" &&
-        <>
-          <LoginForm register={register} onSubmit={onSubmitSignIn}/>
+        state === "sign in" && (
+          <>
+            <LoginForm />
 
-          <div className="login-and-registration__or-with">
-            <div></div>
-            <p>or log in with</p>
-            <div></div>
-          </div>
+            <div className="login-and-registration__or-with">
+              <div></div>
+              <p>or log in with</p>
+              <div></div>
+            </div>
 
-          <OAuthButtons/>
-        </>
+            <OAuthButtons/>
+          </>
+        )
       }
 
       {
-        state === "sign up" &&
-        <SignUpForm register={register} onSubmit={onSubmitSignUp}/>
+        state === "sign up" && (
+          <SignUpForm />
+        )
       }
 
 
