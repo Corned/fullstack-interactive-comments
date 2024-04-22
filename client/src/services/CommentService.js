@@ -51,5 +51,23 @@ const create = async (content, parentId = null) => {
   return data.comments
 }
 
+const edit = async (commentId, content) => {
+  const body = JSON.stringify({
+    content
+  })
+
+  const response = await fetch(`/comment`, {
+    method: "PUT",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body
+  })
+
+  const data = await response.json()
+  console.log(data);
+}
+
 
 export default { getAll, getById, create }
