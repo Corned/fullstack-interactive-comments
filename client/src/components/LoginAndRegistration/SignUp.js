@@ -62,7 +62,7 @@ const SignUpForm = () => {
           type="password"
           name="password-confirm"
           placeholder="Password"
-          {...register("password-confirm")}
+          {...register("passwordConfirm")}
         />
       </div>
 

@@ -1,5 +1,8 @@
+import bcrypt from "bcryptjs"
 import express from "express"
 const router = express.Router()
+
+import User from "../models/User.js"
 
 router.get("/", async (req, res) => {
   res.send("All users :o")
@@ -11,7 +14,29 @@ router.get("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  res.send("Hello world!")
+  // Create new user
+  const { username, password, passwordConfirm } = req.body
+
+  if (password !== passwordConfirm) {
+    return res.status(400).json({ error: "Passwords don't match." })
+  }
+
+  const existingUser = await User.findOne({ username })
+  if (existingUser) {
+    return res.status(400).json({ error: "Username already exists." })
+  }
+
+  console.log("Creating new user %s", username);
+  const passwordHash = await bcrypt.hash(password, 10)
+
+  try {
+    const newUser = new User({ username, passwordHash })
+    const savedUser = await newUser.save()
+    console.log(savedUser)
+  } catch (error) {
+
+  }
+
 })
 
 router.put("/:id", async (req, res) => {
