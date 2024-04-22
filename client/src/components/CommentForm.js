@@ -13,8 +13,6 @@ const CommentForm = ({ buttonLabel, currentUser, parentId = null }) => {
   } = useForm()
 
   const onSubmit = handleSubmit(async (formData, event) => {
-    console.log(formData.content);
-
     const newComment = await CommentService.create(
       formData.content, parentId
     )
