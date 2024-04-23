@@ -54,6 +54,7 @@ const Comment = ({ rootId, commentData }) => {
 
         <Actions
           owner={commentData.owner}
+          commentId={commentData._id}
 
           isReplying={isReplying}
           toggleReply={handleReplyButton}
@@ -64,7 +65,7 @@ const Comment = ({ rootId, commentData }) => {
 
         {
           isEditing
-          ? <EditForm content={commentData.content} /> 
+          ? <EditForm commentId={commentData._id} content={commentData.content} /> 
           : <Content content={commentData.content} />
         }
       </div>

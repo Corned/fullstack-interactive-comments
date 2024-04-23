@@ -5,15 +5,20 @@ import { RiEmotionSadLine } from "@remixicon/react"
 
 import { useContext } from "react"
 import { UserContext } from "context/UserContext"
+import CommentService from "services/CommentService"
 
 const Actions = (props) => {
   const [ currentUser ] = useContext(UserContext)
 
   const {
-    owner,
+    owner, commentId,
     isEditing, toggleEdit,
     isReplying, toggleReply,
   } = props
+
+  const handleDelete = async () => {
+    await CommentService.destroy(commentId)
+  }
 
   return (
     <div className="comment__actions">
@@ -24,7 +29,7 @@ const Actions = (props) => {
       {
         currentUser && currentUser?.username === owner.username &&
         <>
-          <button className="btn transparent warning">
+          <button className="btn transparent warning" onClick={handleDelete}>
             <RiDeleteBinLine/>
             <span>Delete</span>
           </button>

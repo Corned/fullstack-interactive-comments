@@ -61,12 +61,24 @@ router.post("/", async (req, res) => {
   res.status(201).json(newComment.toObject())
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/", async (req, res) => {
   const { id, content } = req.body
 
   const comment = await Comment.findById(id)
 
-  if (comment.id !== req.userId) {
+  if (content === "") {
+    return res.status(401).json({
+      error: "Comment can't be empty"
+    })
+  }
+
+  if (!comment) {
+    return res.status(401).json({
+      error: "Comment doesn't exist"
+    })
+  }
+
+  if (comment.owner._id.toString() !== req.userId) {
     return res.status(401).json({
       error: "You're not the owner of the comment"
     })
@@ -78,8 +90,32 @@ router.put("/:id", async (req, res) => {
   res.status(200).json(comment.toObject())
 })
 
-router.delete("/:id", async (req, res) => {
-  res.send("Hello world!")
+// Delete a comment and all replies associated with it.
+router.delete("/", async (req, res) => {
+  const { id } = req.body
+
+  const comment = await Comment.findById(id)
+  if (!comment) {
+    return res.status(401).json({
+      error: "Comment doesn't exist"
+    })
+  }
+
+  if (comment.owner._id.toString() !== req.userId) {
+    return res.status(401).json({
+      error: "You're not the owner of the comment"
+    })
+  }
+
+  const commentsToDelete = [
+    comment._id, ...comment.replies.map((c) => c._id)
+  ]
+
+  await Comment.deleteMany({ _id: { $in: commentsToDelete }})
+
+  // TODO: Delete comment ids from User.replies
+
+  res.status(200).json({ message: "Comments deleted", ids: commentsToDelete})
 })
 
 export default router

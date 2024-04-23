@@ -156,6 +156,7 @@
     .comment__ping {
       color: $highlight-color;
       font-weight: bold;
+      border-radius: 5px;
 
       &:hover {
         cursor: pointer;

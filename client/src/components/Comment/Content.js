@@ -27,7 +27,6 @@ const Content = ({ content }) => {
 
     let s = content.substring(lastIndex, index)
     if (s !== "") {
-      console.log("inserting", lastIndex, index, s);
       spans.push(<span>{ s }</span>)
     }
 

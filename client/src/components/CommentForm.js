@@ -24,8 +24,9 @@ const CommentForm = ({ buttonLabel, replyingTo, parentId = null }) => {
       <textarea
         resizable="false"
         placeholder="What do you have to say for yourself? Huh?? Really, nothing?"
+        defaultValue={ replyingTo ? `@${replyingTo.username}, ` : ""}
         {...register("content")}
-      >{ replyingTo ? `@${replyingTo.username}, ` : ""}</textarea>
+      ></textarea>
       <button type="submit" className="btn solid"><span>{ buttonLabel }</span></button>
     </form>
   )

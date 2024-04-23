@@ -64,7 +64,7 @@ const create = async (content, parentId = null) => {
 
 const edit = async (commentId, content) => {
   const body = JSON.stringify({
-    content
+    id: commentId, content
   })
 
   const response = await fetch(`/comment`, {
@@ -78,6 +78,26 @@ const edit = async (commentId, content) => {
 
   const data = await response.json()
   console.log(data);
+  return data
+}
+
+const destroy = async (commentId) => {
+  const body = JSON.stringify({
+    id: commentId
+  })
+
+  const response = await fetch("/comment", {
+    method: "DELETE",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body
+  })
+
+  const data = await response.json()
+  console.log(data);
+  return data
 }
 
 
@@ -86,4 +106,6 @@ export default {
   getById,
   getRepliesByParentId,
   create,
+  edit,
+  destroy,
 }
