@@ -152,6 +152,16 @@
 
     color: $text-color;
     font-size: 16px;
+
+    .comment__ping {
+      color: $highlight-color;
+      font-weight: bold;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
   }
 
 
