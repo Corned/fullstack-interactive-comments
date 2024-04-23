@@ -26,6 +26,9 @@ const Comment = ({ renderReplies, rootId, commentData }) => {
   // will have this id as their parent
   rootId = rootId || commentData._id
 
+  const shouldRenderReplies = renderReplies === true 
+    && commentData.replies.length > 0
+
   return (
     <div className="comment-wrapper">
       <div className="card comment">
@@ -66,7 +69,7 @@ const Comment = ({ renderReplies, rootId, commentData }) => {
       }
 
       {
-        renderReplies && comments?.length > 0 &&
+        shouldRenderReplies &&
         <div className="comment__children-container">
           <div className="comment__children-line"/>
           <div className="comment__childen list">

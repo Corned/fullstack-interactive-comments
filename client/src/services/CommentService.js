@@ -59,7 +59,7 @@ const create = async (content, parentId = null) => {
     throw new Error(data.error)
   }
 
-  return data.comments
+  return data
 }
 
 const edit = async (commentId, content) => {
