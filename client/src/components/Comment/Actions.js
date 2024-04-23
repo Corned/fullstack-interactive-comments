@@ -6,8 +6,10 @@ import { RiEmotionSadLine } from "@remixicon/react"
 import { useContext } from "react"
 import { UserContext } from "context/UserContext"
 import CommentService from "services/CommentService"
+import { CommentContext } from "context/CommentText"
 
 const Actions = (props) => {
+  const [ comments, setComments ] = useContext(CommentContext)
   const [ currentUser ] = useContext(UserContext)
 
   const {
@@ -17,7 +19,13 @@ const Actions = (props) => {
   } = props
 
   const handleDelete = async () => {
-    await CommentService.destroy(commentId)
+    const { ids } = await CommentService.destroy(commentId)
+
+    setComments((oldComments) => {
+      return oldComments.filter((comment) => {
+        return !ids.includes(comment._id)
+      })
+    })
   }
 
   return (

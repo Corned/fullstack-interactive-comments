@@ -96,7 +96,6 @@ const destroy = async (commentId) => {
   })
 
   const data = await response.json()
-  console.log(data);
   return data
 }
 
