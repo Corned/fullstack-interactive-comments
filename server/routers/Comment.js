@@ -9,7 +9,21 @@ router.get("/", async (req, res) => {
   const comments = await Comment
     .find({})
     .populate("owner", [ "username" ])
-    .populate("replies")
+
+  res.status(200).json(comments)
+})
+
+router.get("/:id/replies", async (req, res) => {
+  const { id: parentId } = req.params
+
+  console.log(parentId);
+
+  if (!parentId) {
+    return res.status(400).json({ error: "No id" })
+  }
+
+  const comments = await Comment
+    .find({ parent: parentId })
 
   res.status(200).json(comments)
 })
