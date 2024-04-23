@@ -1,22 +1,21 @@
+import { useEffect, useState } from "react"
 
 import Vote from "components/Comment/Vote"
 import Actions from "components/Comment/Actions"
 import Info from "components/Comment/Info"
 import Content from "components/Comment/Content"
 import EditForm from "components/Comment/EditForm"
-
-import { useContext, useEffect, useState } from "react"
-import { UserContext } from "context/UserContext"
-
 import CommentForm from "components/CommentForm"
-import CommentService from "services/CommentService"
-const Comment = ({ commentData }) => {
 
+import CommentService from "services/CommentService"
+
+const Comment = ({ rootId, commentData }) => {
   const [ isEditing, setIsEditing ] = useState(false)
   const [ isReplying, setIsReplying ] = useState(false)
 
   const [ replies, setReplies ] = useState([])
 
+  // Get replies
   useEffect(() => {
     const get = async (id) => {
       const data = await CommentService.getRepliesByParentId(id)
@@ -35,6 +34,11 @@ const Comment = ({ commentData }) => {
   const handleReplyButton = () => {
     setIsReplying(!isReplying)
   }
+
+  // Comment id of the comment at the top of the chain of comments
+  // All replies to this comment or the comment's children
+  // will have this id as their parent
+  rootId = rootId || commentData._id
 
   return (
     <div className="comment-wrapper">
@@ -70,7 +74,7 @@ const Comment = ({ commentData }) => {
         isReplying &&
         <CommentForm
           buttonLabel="reply"
-          parentId={commentData._id}
+          parentId={rootId}
         />
       }
 
@@ -82,6 +86,7 @@ const Comment = ({ commentData }) => {
             { 
               replies.map((comment) => 
                 <Comment
+                  rootId={rootId}
                   commentData={comment}
                 />
               )

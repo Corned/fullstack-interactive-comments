@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { useContext, useEffect } from "react"
+import { useState, useContext } from "react"
 import { UserContext } from "context/UserContext"
 import { RiUser3Line as LoginIcon } from "@remixicon/react"
 
@@ -14,6 +13,7 @@ const Header = () => {
   const logout = async () => {
     try {
       await AuthService.logout(setUser)
+      
     } catch (error) {
       console.log(error.message)
     }
