@@ -2,17 +2,18 @@ import data from "data.json"
 import CommentForm from "components/CommentForm"
 import Header from "components/Header"
 import Footer from "components/Footer"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { UserContext } from "context/UserContext"
 
 import Comment from "components/Comment"
 
 import AuthService from "services/AuthService"
 import CommentService from "services/CommentService"
+import { CommentContext } from "context/CommentText"
 
 function App() {
   const [ user, setUser ] = useContext(UserContext)
-  const [ comments, setComments ] = useState([])
+  const [ comments, setComments ] = useContext(CommentContext)
 
   // Check for login
   useEffect(() => {
@@ -47,7 +48,7 @@ function App() {
             // Only render comments without parents
             comment.parent ? <></> :
             <Comment
-              allComments={comments}
+              renderReplies
               commentData={comment}
               currentUser={data.currentUser}
             />

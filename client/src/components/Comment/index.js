@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useContext, useState } from "react"
+import { CommentContext } from "context/CommentText"
 
 import Vote from "components/Comment/Vote"
 import Actions from "components/Comment/Actions"
@@ -7,25 +8,10 @@ import Content from "components/Comment/Content"
 import EditForm from "components/Comment/EditForm"
 import CommentForm from "components/CommentForm"
 
-import CommentService from "services/CommentService"
-
-const Comment = ({ allComments, rootId, commentData }) => {
+const Comment = ({ renderReplies, rootId, commentData }) => {
   const [ isEditing, setIsEditing ] = useState(false)
   const [ isReplying, setIsReplying ] = useState(false)
-
-  const [ replies, setReplies ] = useState([])
-
-  // Get replies
-/*   useEffect(() => {
-    const get = async (id) => {
-      const data = await CommentService.getRepliesByParentId(id)
-      setReplies(data)
-    }
-
-    if (commentData.replies.length > 0) {
-      get(commentData._id)
-    }
-  }, [ ]) */
+  const [ comments ] = useContext(CommentContext)
 
   const handleEditButton = () => {
     setIsEditing(!isEditing)
@@ -69,8 +55,7 @@ const Comment = ({ allComments, rootId, commentData }) => {
           : <Content content={commentData.content} />
         }
       </div>
-
-
+      
       {
         isReplying &&
         <CommentForm
@@ -81,12 +66,12 @@ const Comment = ({ allComments, rootId, commentData }) => {
       }
 
       {
-        allComments?.length > 0 &&
+        renderReplies && comments?.length > 0 &&
         <div className="comment__children-container">
           <div className="comment__children-line"/>
           <div className="comment__childen list">
             { 
-              allComments.map((comment) =>
+              comments.map((comment) =>
                 comment.parent === rootId ?
                 <Comment
                   rootId={rootId}
