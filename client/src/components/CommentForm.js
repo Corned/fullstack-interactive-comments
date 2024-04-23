@@ -8,7 +8,7 @@ import { useContext } from "react"
 import { CommentContext } from "context/CommentText"
 
 
-const CommentForm = ({ buttonLabel, replyingTo, parentId = null }) => {
+const CommentForm = ({ buttonLabel, replyingTo, parentId = null, setIsReplying }) => {
   const [ comments, setComments ] = useContext(CommentContext)
 
   const {
@@ -26,6 +26,10 @@ const CommentForm = ({ buttonLabel, replyingTo, parentId = null }) => {
       ...comments,
       newComment
     ])
+
+    if (setIsReplying) {
+      setIsReplying(false)
+    }
   })
 
   return (
