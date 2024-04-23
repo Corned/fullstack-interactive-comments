@@ -22,10 +22,16 @@ const CommentForm = ({ buttonLabel, replyingTo, parentId = null, setIsReplying }
       formData.content, parentId
     )
 
-    setComments([
-      ...comments,
-      newComment
-    ])
+    setComments((oldData) => {
+      return [ ...oldData.map((comment) => {
+        if (comment._id === newComment.parent) {
+          comment.replies = [ ...comment.replies, newComment._id ]
+        }
+
+        return comment
+      }), newComment ]
+    })
+
 
     if (setIsReplying) {
       setIsReplying(false)
