@@ -47,6 +47,7 @@ function App() {
             // Only render comments without parents
             comment.parent ? <></> :
             <Comment
+              allComments={comments}
               commentData={comment}
               currentUser={data.currentUser}
             />

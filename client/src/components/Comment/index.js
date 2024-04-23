@@ -9,14 +9,14 @@ import CommentForm from "components/CommentForm"
 
 import CommentService from "services/CommentService"
 
-const Comment = ({ rootId, commentData }) => {
+const Comment = ({ allComments, rootId, commentData }) => {
   const [ isEditing, setIsEditing ] = useState(false)
   const [ isReplying, setIsReplying ] = useState(false)
 
   const [ replies, setReplies ] = useState([])
 
   // Get replies
-  useEffect(() => {
+/*   useEffect(() => {
     const get = async (id) => {
       const data = await CommentService.getRepliesByParentId(id)
       setReplies(data)
@@ -25,7 +25,7 @@ const Comment = ({ rootId, commentData }) => {
     if (commentData.replies.length > 0) {
       get(commentData._id)
     }
-  }, [ ])
+  }, [ ]) */
 
   const handleEditButton = () => {
     setIsEditing(!isEditing)
@@ -81,16 +81,17 @@ const Comment = ({ rootId, commentData }) => {
       }
 
       {
-        replies?.length > 0 &&
+        allComments?.length > 0 &&
         <div className="comment__children-container">
           <div className="comment__children-line"/>
           <div className="comment__childen list">
             { 
-              replies.map((comment) => 
+              allComments.map((comment) =>
+                comment.parent === rootId ?
                 <Comment
                   rootId={rootId}
                   commentData={comment}
-                />
+                /> : <></>
               )
             }
           </div>
