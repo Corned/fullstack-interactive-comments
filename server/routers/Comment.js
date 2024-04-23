@@ -111,17 +111,17 @@ router.delete("/", async (req, res) => {
     comment._id.toString(), ...comment.replies.map((c) => c._id.toString())
   ]
 
-  await Comment.deleteMany({ _id: { $in: commentsToDelete }})
+  await comment.deleteOne()
 
   // Delete comment ids from parent Comment.replies
-  const parentComment = await Comment.findById(comment.parent)
+/*   const parentComment = await Comment.findById(comment.parent)
   if (parentComment) {
     parentComment.replies = parentComment.replies.filter((replyId) => {
       console.log(commentsToDelete, replyId.toString());
       return !commentsToDelete.includes(replyId.toString())
     })
     await parentComment.save()
-  }
+  } */
 
   // TODO: Delete comment ids from User.comments
 

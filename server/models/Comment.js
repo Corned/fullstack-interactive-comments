@@ -32,6 +32,10 @@ const commentSchema = new Schema({
   timestamps: true
 })
 
+commentSchema.post("deleteOne", { document: true, query: false }, async function() {
+  console.log("deleteOne", this);
+})
+
 const Comment = mongoose.model("Comment", commentSchema)
 
 export default Comment
