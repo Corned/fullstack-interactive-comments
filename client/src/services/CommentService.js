@@ -8,8 +8,6 @@ const getAll = async () => {
     throw new Error(data.error)
   }
 
-  console.log(data);
-
   return data
 }
 

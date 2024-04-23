@@ -25,7 +25,7 @@ const Comment = ({ rootId, commentData }) => {
     if (commentData.replies.length > 0) {
       get(commentData._id)
     }
-  }, [])
+  }, [ ])
 
   const handleEditButton = () => {
     setIsEditing(!isEditing)
@@ -74,6 +74,7 @@ const Comment = ({ rootId, commentData }) => {
         isReplying &&
         <CommentForm
           buttonLabel="reply"
+          replyingTo={commentData.owner}
           parentId={rootId}
         />
       }

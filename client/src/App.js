@@ -37,9 +37,6 @@ function App() {
     getAllComments()
   }, [ ])
 
-
-  console.log(comments);
-
   return (
     <div className="App">
       <Header/>

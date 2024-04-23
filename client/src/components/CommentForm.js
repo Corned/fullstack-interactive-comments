@@ -5,7 +5,7 @@ import ProfilePicture from "./ProfilePicture"
 import CommentService from "services/CommentService"
 
 
-const CommentForm = ({ buttonLabel, currentUser, parentId = null }) => {
+const CommentForm = ({ buttonLabel, replyingTo, parentId = null }) => {
   const {
     register,
     handleSubmit,
@@ -18,6 +18,8 @@ const CommentForm = ({ buttonLabel, currentUser, parentId = null }) => {
     )
   })
 
+  console.log(replyingTo);
+
   return (
     <form className="card comment-form" onSubmit={onSubmit}>
       <ProfilePicture/>
@@ -25,7 +27,7 @@ const CommentForm = ({ buttonLabel, currentUser, parentId = null }) => {
         resizable="false"
         placeholder="What do you have to say for yourself? Huh?? Really, nothing?"
         {...register("content")}
-      ></textarea>
+      >{ replyingTo ? `@${replyingTo.username}, ` : ""}</textarea>
       <button type="submit" className="btn solid"><span>{ buttonLabel }</span></button>
     </form>
   )
