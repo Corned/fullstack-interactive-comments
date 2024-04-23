@@ -23,7 +23,6 @@ const Content = ({ content }) => {
 
   while (match = r.exec(content)) {
     const { 0: username, index } = match
-    console.log(username, index);
 
     let s = content.substring(lastIndex, index)
     if (s !== "") {
