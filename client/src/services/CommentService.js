@@ -26,6 +26,19 @@ const getById = async (id) => {
   return data
 }
 
+const getRepliesByParentId = async (id) => {
+  const response = await fetch(`/comment/${id}/replies`, {
+    method: "GET",
+  })
+
+  const data = await response.json()
+  if (data.error) {
+    throw new Error(data.error)
+  }
+
+  return data
+}
+
 const create = async (content, parentId = null) => {
   const body = JSON.stringify({
     content,
@@ -70,4 +83,9 @@ const edit = async (commentId, content) => {
 }
 
 
-export default { getAll, getById, create }
+export default {
+  getAll,
+  getById,
+  getRepliesByParentId,
+  create,
+}

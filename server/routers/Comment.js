@@ -24,8 +24,9 @@ router.get("/:id/replies", async (req, res) => {
 
   const comments = await Comment
     .find({ parent: parentId })
+    .populate("owner", [ "username" ])
 
-  res.status(200).json(comments)
+  res.status(200).json(comments || [])
 })
 
 router.get("/:id", async (req, res) => {

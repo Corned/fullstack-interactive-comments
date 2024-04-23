@@ -5,16 +5,28 @@ import Info from "components/Comment/Info"
 import Content from "components/Comment/Content"
 import EditForm from "components/Comment/EditForm"
 
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "context/UserContext"
 
 import CommentForm from "components/CommentForm"
-
+import CommentService from "services/CommentService"
 const Comment = ({ commentData }) => {
-  const [ user ] = useContext(UserContext)
 
   const [ isEditing, setIsEditing ] = useState(false)
   const [ isReplying, setIsReplying ] = useState(false)
+
+  const [ replies, setReplies ] = useState([])
+
+  useEffect(() => {
+    const get = async (id) => {
+      const data = await CommentService.getRepliesByParentId(id)
+      setReplies(data)
+    }
+
+    if (commentData.replies.length > 0) {
+      get(commentData._id)
+    }
+  }, [])
 
   const handleEditButton = () => {
     setIsEditing(!isEditing)
@@ -24,31 +36,20 @@ const Comment = ({ commentData }) => {
     setIsReplying(!isReplying)
   }
 
-  const {
-    votes,
-    content,
-    createdAt,
-    owner,
-    replies,
-    parent,
-  } = commentData
-
   return (
     <div className="comment-wrapper">
       <div className="card comment">
         <Vote
-          score={votes.length}
+          score={commentData.votes.length}
         />
 
         <Info
-          currentUser={user}
-          user={owner}
-          createdAt={createdAt}
+          owner={commentData.owner}
+          createdAt={commentData.createdAt}
         />
 
         <Actions
-          currentUser={user}
-          user={owner}
+          owner={commentData.owner}
 
           isReplying={isReplying}
           toggleReply={handleReplyButton}
@@ -59,8 +60,8 @@ const Comment = ({ commentData }) => {
 
         {
           isEditing
-          ? <EditForm content={content} /> 
-          : <Content content={content} />
+          ? <EditForm content={commentData.content} /> 
+          : <Content content={commentData.content} />
         }
       </div>
 
@@ -69,7 +70,6 @@ const Comment = ({ commentData }) => {
         isReplying &&
         <CommentForm
           buttonLabel="reply"
-          currentUser={user}
           parentId={commentData._id}
         />
       }
@@ -83,7 +83,6 @@ const Comment = ({ commentData }) => {
               replies.map((comment) => 
                 <Comment
                   commentData={comment}
-                  currentUser={user}
                 />
               )
             }

@@ -3,9 +3,14 @@ import { RiDeleteBinLine } from "@remixicon/react"
 import { RiPencilLine } from "@remixicon/react"
 import { RiEmotionSadLine } from "@remixicon/react"
 
+import { useContext } from "react"
+import { UserContext } from "context/UserContext"
+
 const Actions = (props) => {
+  const [ currentUser ] = useContext(UserContext)
+
   const {
-    currentUser, user,
+    owner,
     isEditing, toggleEdit,
     isReplying, toggleReply,
   } = props
@@ -17,7 +22,7 @@ const Actions = (props) => {
         <></>
       }
       {
-        currentUser && currentUser?.username === user.username &&
+        currentUser && currentUser?.username === owner.username &&
         <>
           <button className="btn transparent warning">
             <RiDeleteBinLine/>
@@ -30,7 +35,7 @@ const Actions = (props) => {
         </>
       }
       {
-        currentUser && currentUser?.username !== user.username &&
+        currentUser && currentUser?.username !== owner.username &&
         <button className="btn transparent" onClick={toggleReply}>
           { isReplying ? <RiEmotionSadLine/> : <RiReplyFill/> }
           <span>{ isReplying ? "Nevermind.." : "Reply" }</span>
