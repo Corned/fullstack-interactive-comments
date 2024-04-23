@@ -1,8 +1,11 @@
 
+import { CommentContext } from "context/CommentText"
+import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import CommentService from "services/CommentService"
 
-const EditForm = ({ commentId, content }) => {
+const EditForm = ({ commentId, content, setIsEditing }) => {
+  const [ comments, setComments ] = useContext(CommentContext)
   const {
     register,
     handleSubmit,
@@ -10,8 +13,22 @@ const EditForm = ({ commentId, content }) => {
   } = useForm()
 
   const onSubmit = handleSubmit(async (formData, event) => {
-    console.log(commentId, formData);
     const data = await CommentService.edit(commentId, formData.content)
+    
+    setComments((oldData) => {
+      return oldData.map((comment) => {
+        if (comment._id === data._id) {
+          return {
+            ...comment,
+            content: data.content
+          }
+        }
+
+        return comment
+      })
+    })
+    
+    setIsEditing(false)
   })
 
   return (

@@ -54,7 +54,11 @@ const Comment = ({ renderReplies, rootId, commentData }) => {
 
         {
           isEditing
-          ? <EditForm commentId={commentData._id} content={commentData.content} /> 
+          ? <EditForm
+            commentId={commentData._id}
+            content={commentData.content}
+            setIsEditing={setIsEditing}
+          /> 
           : <Content content={commentData.content} />
         }
       </div>
@@ -63,6 +67,7 @@ const Comment = ({ renderReplies, rootId, commentData }) => {
         isReplying &&
         <CommentForm
           buttonLabel="reply"
+          setIsReplying={setIsReplying}
           replyingTo={commentData.owner}
           parentId={rootId}
         />
