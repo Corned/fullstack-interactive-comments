@@ -12,6 +12,12 @@ header {
   flex-direction: row;
   justify-content: space-between;
 
+  .header__user {
+    display: flex;
+    flex: row;
+    align-items: center;
+  }
+
   &:before {
     content: "";
     background-color: rgba(255, 255, 255, 0.9);

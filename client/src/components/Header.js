@@ -25,9 +25,9 @@ const Header = () => {
 
       {
         user && (
-          <div>
+          <div className="header__user">
             <p>Logged in as { user.username }</p>
-            <button className="btn transparent" onClick={logout}>logout :(</button> 
+            <button className="btn transparent" onClick={logout}>logout</button> 
           </div>
           
         )
