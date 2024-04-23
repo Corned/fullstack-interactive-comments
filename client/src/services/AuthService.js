@@ -1,5 +1,7 @@
+const endpoint = "/auth"
+
 const authenticate = async (setUser) => {
-  const response = await fetch("/auth", {
+  const response = await fetch(`${endpoint}`, {
     method: "POST",
     credentials: "same-origin",
   })
@@ -11,9 +13,8 @@ const authenticate = async (setUser) => {
 
   setUser(data.user)
 }
-
 const login = async (setUser, username, password) => {
-  const response = await fetch("/auth/login", {
+  const response = await fetch(`${endpoint}/login`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -34,7 +35,7 @@ const login = async (setUser, username, password) => {
 }
 
 const logout = async (setUser) => {
-  await fetch("/auth/logout", {
+  await fetch(`${endpoint}/logout`, {
     method: "POST"
   })
 

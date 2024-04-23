@@ -1,5 +1,7 @@
+const endpoint = "/comment"
+
 const getAll = async () => {
-  const response = await fetch("/comment", {
+  const response = await fetch(`${endpoint}`, {
     method: "GET",
   })
 
@@ -12,7 +14,7 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
-  const response = await fetch(`/comment/{id}`, {
+  const response = await fetch(`${endpoint}/{id}`, {
     method: "GET",
   })
 
@@ -25,7 +27,7 @@ const getById = async (id) => {
 }
 
 const getRepliesByParentId = async (id) => {
-  const response = await fetch(`/comment/${id}/replies`, {
+  const response = await fetch(`${endpoint}/${id}/replies`, {
     method: "GET",
   })
 
@@ -45,7 +47,7 @@ const create = async (content, parentId = null) => {
 
   console.log(body);
 
-  const response = await fetch(`/comment`, {
+  const response = await fetch(`${endpoint}`, {
     method: "POST",
     credentials: "same-origin",
     headers: {
@@ -67,7 +69,7 @@ const edit = async (commentId, content) => {
     id: commentId, content
   })
 
-  const response = await fetch(`/comment`, {
+  const response = await fetch(`${endpoint}`, {
     method: "PUT",
     credentials: "same-origin",
     headers: {
@@ -86,7 +88,7 @@ const destroy = async (commentId) => {
     id: commentId
   })
 
-  const response = await fetch("/comment", {
+  const response = await fetch(`${endpoint}`, {
     method: "DELETE",
     credentials: "same-origin",
     headers: {
