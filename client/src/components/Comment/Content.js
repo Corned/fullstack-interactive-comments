@@ -29,7 +29,7 @@ const Content = ({ content }) => {
       spans.push(<span>{ s }</span>)
     }
 
-    spans.push(<span class="comment__ping">{ content.substr(index, username.length) }</span>)
+    spans.push(<span className="comment__ping">{ content.substr(index, username.length) }</span>)
     lastIndex = index + username.length
   }
 
