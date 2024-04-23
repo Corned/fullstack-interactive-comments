@@ -18,8 +18,6 @@ const CommentForm = ({ buttonLabel, replyingTo, parentId = null }) => {
     )
   })
 
-  console.log(replyingTo);
-
   return (
     <form className="card comment-form" onSubmit={onSubmit}>
       <ProfilePicture/>
