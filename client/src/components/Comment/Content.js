@@ -1,39 +1,32 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const Content = ({ content }) => {
+  const atUsernameRegex = /@\w+/gm
 
-
-  const r = (/@\w+/gm)
-
-  let match
+  let lastMatch
   let lastIndex = 0
   let spans = []
 
-  while (match = r.exec(content)) {
-    const { 0: username, index } = match
+  while ((lastMatch = atUsernameRegex.exec(content))) {
+    const { 0: username, index } = lastMatch
 
-    let s = content.substring(lastIndex, index)
-    if (s !== "") {
-      spans.push(<span>{ s }</span>)
+    let usernameMatch = content.substring(lastIndex, index)
+    if (usernameMatch !== "") {
+      spans.push(
+        <span key={`@${index.toString()}`}>
+          { usernameMatch }
+        </span>
+      )
     }
 
-    spans.push(<span className="comment__ping">{ content.substr(index, username.length) }</span>)
+    spans.push(
+      <span key={index.toString()} className="comment__ping">
+        { content.substr(index, username.length) }
+      </span>
+    )
+
     lastIndex = index + username.length
   }
 
-  spans.push(<span>{ content.substr(lastIndex, content.length) }</span>)
+  spans.push(<span key="rest">{ content.substr(lastIndex, content.length) }</span>)
 
   return (
     <p className="comment__content">{ spans }</p>
