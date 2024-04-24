@@ -33,7 +33,7 @@ const Comment = ({ renderReplies, rootId, commentData }) => {
     <div className="comment-wrapper">
       <div className="card comment">
         <Vote
-          score={commentData.votes.length}
+          commentData={commentData}
         />
 
         <Info

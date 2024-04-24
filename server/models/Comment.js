@@ -9,12 +9,7 @@ const commentSchema = new Schema({
     maxlength: 1024,
   },
 
-  upvotes: [{
-    type: Schema.ObjectId,
-    ref: "Vote",
-  }],
-
-  downvotes: [{
+  votes: [{
     type: Schema.ObjectId,
     ref: "Vote",
   }],
@@ -37,11 +32,25 @@ const commentSchema = new Schema({
   timestamps: true
 })
 
+// Client only needs to know how many upvotes and downvotes
+// and how the currently logged in user has voted.
+commentSchema.statics.formatForUser = (comment, forUserId) => {
+  return {
+    ...comment._doc, // ???
+    userVote: forUserId 
+      ? comment.votes.find((vote) => vote.owner.toString() === forUserId)
+      : null,
+    upvotes: comment.votes.filter((vote) => vote.value > 0).length,
+    downvotes: comment.votes.filter((vote) => vote.value < 0).length,
+    votes: [ "Removed for privacy :)" ],
+  }
+}
+
 // When deleting a comment, check if the
 // comment has a parent. If so, delete
 // the comment's id from parent's replies.
 // + If comment has no parent, delete all replies
-// + Delete comment's 
+// TODO: Delete comment's votes
 commentSchema.post("deleteOne", { document: true, query: false }, async function() {
   const { _id: id, parent: parentId } = this
   if (!parentId) {

@@ -8,18 +8,23 @@ const voteSchema = new Schema({
     required: true,
   },
 
+  value: {
+    type: Number,
+    required: true,
+  },
+
   comment: {
     type: Schema.ObjectId,
     ref: "Comment",
     required: true,
   },
-
-  isPositive: {
-    type: Boolean,
-    default: true,
-    required: true,
-  }
+}, {
+  timestamps: true
 })
+
+/* voteSchema.post("save", { document: true, query: false }, async function() {
+
+}) */
 
 const Vote = mongoose.model("Vote", voteSchema)
 

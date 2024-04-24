@@ -9,8 +9,14 @@ router.get("/", async (req, res) => {
   const comments = await Comment
     .find({})
     .populate("owner", [ "username" ])
+    .populate("votes")
 
-  res.status(200).json(comments)
+
+  const formattedComments = comments.map((comment) => {
+    return Comment.formatForUser(comment, req.userId)
+  })
+
+  res.status(200).json(formattedComments)
 })
 
 router.get("/:id/replies", async (req, res) => {
@@ -26,7 +32,11 @@ router.get("/:id/replies", async (req, res) => {
     .find({ parent: parentId })
     .populate("owner", [ "username" ])
 
-  res.status(200).json(comments || [])
+  const formattedComments = comments.map((comment) => {
+    return Comment.formatForUser(comment, req.userId)
+  })
+
+  res.status(200).json(formattedComments)
 })
 
 router.get("/:id", async (req, res) => {
@@ -58,7 +68,9 @@ router.post("/", async (req, res) => {
     await parentComment.save()
   }
 
-  res.status(201).json(newComment.toObject())
+  const formattedComment = Comment.formatForUser(newComment, req.userId)
+
+  res.status(201).json(formattedComment)
 })
 
 router.put("/", async (req, res) => {
