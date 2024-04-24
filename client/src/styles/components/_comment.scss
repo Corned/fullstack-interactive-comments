@@ -83,6 +83,9 @@
 
     .comment__vote-count {
       color: $highlight-color;
+      background-color: $background-color;
+      border-radius: inherit;
+      padding: 4px 6px;
       font-weight: bold;
       font-size: 18px;
     }
