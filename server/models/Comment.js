@@ -32,8 +32,21 @@ const commentSchema = new Schema({
   timestamps: true
 })
 
+// When deleting a comment, check if the
+// comment has a parent. If so, delete
+// the comment's id from parent's replies.
 commentSchema.post("deleteOne", { document: true, query: false }, async function() {
-  console.log("deleteOne", this);
+  const { _id: id, parent: parentId } = this
+  if (!parentId) {
+    return
+  }
+
+  const parent = await Comment.findById(parentId)
+  parent.replies = parent.replies.filter((replyId) => {
+    return replyId.toString() !== id.toString()
+  })
+
+  await parent.save()
 })
 
 const Comment = mongoose.model("Comment", commentSchema)
