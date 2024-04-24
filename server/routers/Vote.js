@@ -90,12 +90,12 @@ router.post("/unvote", async (req, res) => {
 
   if (existingVote) {
     await existingVote.deleteOne()
+    // put this in a middleware
+    commentToUnvote.votes = commentToUnvote.votes.filter((vote) => {
+      return vote.id !== existingVote.id
+    })
   }
 
-  // put this in a middleware
-  commentToUnvote.votes = commentToUnvote.votes.filter((vote) => {
-    return vote.id !== existingVote.id
-  })
   const savedComment = await commentToUnvote.save()
   const formattedComment = Comment.formatForUser(savedComment, req.userId)
 
