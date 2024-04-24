@@ -5,15 +5,19 @@ import { RiUser3Line as LoginIcon } from "@remixicon/react"
 import Logo from "./Logo"
 import LoginAndRegistration from "./LoginAndRegistration"
 import AuthService from "services/AuthService"
+import { CommentContext } from "context/CommentText"
+import CommentService from "services/CommentService"
 
 const Header = () => {
   const [ user, setUser ] = useContext(UserContext)
+  const [ comments, setComments ] = useContext(CommentContext)
   const [ displayModal, setDisplayModal ] = useState(false)
 
   const logout = async () => {
     try {
       await AuthService.logout(setUser)
-      
+      const comments = await CommentService.getAll()
+      setComments(comments)
     } catch (error) {
       console.log(error.message)
     }
