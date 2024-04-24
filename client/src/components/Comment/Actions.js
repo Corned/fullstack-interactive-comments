@@ -23,6 +23,10 @@ const Actions = (props) => {
 
     setComments((oldComments) => {
       return oldComments.filter((comment) => {
+        console.log(ids, comment._id, !ids.includes(comment._id));
+        comment.replies = comment.replies.filter((replyId) => {
+          return !ids.includes(replyId.toString())
+        })
         return !ids.includes(comment._id)
       })
     })
