@@ -32,7 +32,8 @@ router.post("/", async (req, res) => {
   try {
     const newUser = new User({ username, passwordHash })
     const savedUser = await newUser.save()
-    console.log(savedUser)
+    
+    res.status(201).json({ message: "success!" })
   } catch (error) {
 
   }
