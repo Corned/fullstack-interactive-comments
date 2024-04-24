@@ -1,4 +1,6 @@
 import mongoose from "mongoose"
+import Vote from "./Vote.js"
+
 const { Schema } = mongoose
 
 const commentSchema = new Schema({
@@ -49,23 +51,50 @@ commentSchema.statics.formatForUser = (comment, forUserId) => {
 // When deleting a comment, check if the
 // comment has a parent. If so, delete
 // the comment's id from parent's replies.
-// + If comment has no parent, delete all replies
-// TODO: Delete comment's votes
+// If comment has no parent, delete all replies
+
 commentSchema.post("deleteOne", { document: true, query: false }, async function() {
   const { _id: id, parent: parentId } = this
+
+  // If the deleted comment is a root Comment
+  // (without a parent)
   if (!parentId) {
-    // Comment has no parent, delete all replies
-    await Comment.deleteMany({ parent: id })
+    // Delete all votes related to the deleted Comment
+    await Vote.deleteMany({ comment: id })
+
+    // Comment has no parent, find all replies
+    const commentsToBeDeleted = await Comment.find({ parent: id })
+
+    // Delete all replies related to the root comment
+    const promises = []
+    for (const comment of commentsToBeDeleted) {
+      promises.push( await comment.deleteOne() )
+    }
+
+    await Promise.all(promises)
 
     return
   }
 
-  const parent = await Comment.findById(parentId)
-  parent.replies = parent.replies.filter((replyId) => {
-    return replyId.toString() !== id.toString()
-  })
+  // If comment has a parent (comment is a reply)
 
-  await parent.save()
+  // Delete all votes associated with the comment
+  // that was deleted with deleteOne
+  await Vote.deleteMany({ comment: id })
+
+  // Remove reference to this comment in parent
+  const parent = await Comment.findById(parentId)
+
+  // If user deletes the root/parent comment first
+  // its replies are deleted afterwards so parent
+  // already doesn't exist.
+  if (parent) {
+    parent.replies = parent.replies.filter((replyId) => {
+      return replyId.toString() !== id.toString()
+    })
+
+    await parent.save()
+  }
 })
 
 const Comment = mongoose.model("Comment", commentSchema)
