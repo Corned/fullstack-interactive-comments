@@ -2,9 +2,12 @@ import { UserContext } from "context/UserContext"
 import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import AuthService from "services/AuthService"
+import CommentService from "services/CommentService"
+import { CommentContext } from "context/CommentText"
 
 const LoginForm = () => {
   const [ user, setUser ] = useContext(UserContext)
+  const [ comments, setComments ] = useContext(CommentContext)
 
   const [ error, setError ] = useState(null)
   const {
@@ -16,6 +19,9 @@ const LoginForm = () => {
   const onSubmit = handleSubmit(async (formData, event) => {
     try {
       await AuthService.login(setUser, formData.username, formData.password)
+
+      const comments = await CommentService.getAll()
+      setComments(comments)
     } catch (error) {
       console.log(error.message)
       setError(error.message)
