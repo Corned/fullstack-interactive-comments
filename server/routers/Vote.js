@@ -54,10 +54,6 @@ router.post("/", async (req, res) => {
   const savedComment = await commentToVote.save() 
   const formattedComment = Comment.formatForUser(savedComment, req.userId)
 
-
-  console.log("VOTE", formattedComment);
-  console.log(existingVote);
-
   res.status(201).json({ message: "Voted!", newComment: formattedComment })
 })
 
@@ -98,10 +94,6 @@ router.post("/unvote", async (req, res) => {
 
   const savedComment = await commentToUnvote.save()
   const formattedComment = Comment.formatForUser(savedComment, req.userId)
-
-
-  console.log("UNVOTE", formattedComment);
-  console.log(existingVote);
 
   res.status(201).json({ message: "Unvoted!", newComment: formattedComment })
 })
