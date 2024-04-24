@@ -45,8 +45,6 @@ const create = async (content, parentId = null) => {
     parentId
   })
 
-  console.log(body);
-
   const response = await fetch(`${endpoint}`, {
     method: "POST",
     credentials: "same-origin",
@@ -79,7 +77,6 @@ const edit = async (commentId, content) => {
   })
 
   const data = await response.json()
-  console.log(data);
   return data
 }
 
