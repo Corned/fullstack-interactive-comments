@@ -9,7 +9,12 @@ const commentSchema = new Schema({
     maxlength: 1024,
   },
 
-  votes: [{
+  upvotes: [{
+    type: Schema.ObjectId,
+    ref: "Vote",
+  }],
+
+  downvotes: [{
     type: Schema.ObjectId,
     ref: "Vote",
   }],
@@ -35,9 +40,14 @@ const commentSchema = new Schema({
 // When deleting a comment, check if the
 // comment has a parent. If so, delete
 // the comment's id from parent's replies.
+// + If comment has no parent, delete all replies
+// + Delete comment's 
 commentSchema.post("deleteOne", { document: true, query: false }, async function() {
   const { _id: id, parent: parentId } = this
   if (!parentId) {
+    // Comment has no parent, delete all replies
+    await Comment.deleteMany({ parent: id })
+
     return
   }
 
