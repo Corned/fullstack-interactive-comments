@@ -113,21 +113,7 @@ router.delete("/", async (req, res) => {
 
   await comment.deleteOne()
 
-  // Delete comment ids from parent Comment.replies
-/*   const parentComment = await Comment.findById(comment.parent)
-  if (parentComment) {
-    parentComment.replies = parentComment.replies.filter((replyId) => {
-      console.log(commentsToDelete, replyId.toString());
-      return !commentsToDelete.includes(replyId.toString())
-    })
-    await parentComment.save()
-  } */
-
   // TODO: Delete comment ids from User.comments
-
-
-  
-
 
   res.status(200).json({
     message: "Comments deleted", 
