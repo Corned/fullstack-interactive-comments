@@ -76,15 +76,16 @@ const Comment = ({ renderReplies, rootId, commentData }) => {
       {
         shouldRenderReplies &&
         <div className="comment__children-container">
-          <div className="comment__children-line"/>
-          <div className="comment__childen list">
+          <div className="comment__children-line" key={12345}/>
+          <div className="comment__childen list" key={43643}>
             { 
               comments.map((comment) =>
-                comment.parent === rootId ?
+                comment.parent === rootId &&
                 <Comment
+                  key={`CommentReply-${comment.id}`}
                   rootId={rootId}
                   commentData={comment}
-                /> : <></>
+                />
               )
             }
           </div>

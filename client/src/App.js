@@ -46,8 +46,9 @@ function App() {
         {
           comments.map((comment) =>
             // Only render comments without parents
-            comment.parent ? <></> :
+            !comment.parent &&
             <Comment
+              key={`RootComment-${comment._id}`}
               renderReplies={true}
               commentData={comment}
               currentUser={data.currentUser}
