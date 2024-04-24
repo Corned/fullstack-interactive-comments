@@ -73,7 +73,9 @@
       transition: background-color 0.05s linear,
                   color 0.05s linear;
                   
-
+      &.active {
+        background-color: $highlight-color;
+      }
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.1);
